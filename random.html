@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--Emmet cheat sheet-->
+<p id="result"></p>
+HighScore: <p id="high-score"></p>
+<button onclick="randomNumberArr()">Random</button>
+<script>
+    let highest = loadScore();
+    let highestArr = loadScoreArray();
+    // document.getElementById('high-score').innerHTML = highest;
+    document.getElementById('high-score').innerHTML = highestArr[0] + ':'+highestArr[1];
+    function randomNumber() {
+        let num = Math.floor(Math.random()*100);
+        document.getElementById('result').innerHTML = num;
+        if(num > highest){
+            highest = num;
+            saveScore(highest);
+            document.getElementById('high-score').innerHTML = highest;
+        }
+    }
+
+    function randomNumberArr() {
+        let num = Math.floor(Math.random()*100);
+        document.getElementById('result').innerHTML = num;
+        // console.log(+highestArr[1]);
+        if(num > (+highestArr[1]) || isNaN(highestArr[1])){
+            let higher = num;
+            saveScoreArray(higher);
+            highestArr = loadScoreArray();
+            console.log(highestArr);
+            document.getElementById('high-score').innerHTML = highestArr[0] + ':'+highestArr[1];
+        }
+    }
+
+    function saveScore(score) {
+        localStorage.setItem('score',score);
+    }
+
+    function loadScore() {
+        if(localStorage.hasOwnProperty('score')){
+            return localStorage.getItem('score');
+        }else {
+            return 0;
+        }
+    }
+    //Lưu Array
+    function saveScoreArray(score) {
+        let name = prompt('Nhập tên');
+        let user = [name,score];
+        localStorage.setItem('score2',JSON.stringify(user));
+    }
+    function loadScoreArray() {
+        if(localStorage.hasOwnProperty('score2')){
+            return JSON.parse(localStorage.getItem('score2'));
+        }else {
+            return [];
+        }
+    }
+
+
+</script>
+</body>
+</html>
